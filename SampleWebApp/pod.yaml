@@ -1,0 +1,74 @@
+apiVersion: v1
+kind: Pod
+metadata:
+   name: samplewebapp
+spec:
+   containers:
+     - image: blueskydevus/samplewebapp:latest
+       name: samplewebapp
+       resources:
+        requests:
+          memory: "500Mi"
+          cpu: "500m"
+        limits:
+          memory: "1Gi"
+          cpu: "1000m"
+       volumeMounts:
+        - mountPath: /etc/config
+          name: sampleapp-config
+          readOnly: true
+        - mountPath: /etc/secrets
+          name: sampleapp-secrets
+          readOnly: true
+       env:
+       - name: AppSetting1
+         valueFrom:
+           configMapKeyRef:
+             name: sampleapp-config
+             key: AppSetting1
+
+       - name: AppSetting2
+         valueFrom:
+           configMapKeyRef:
+             name: sampleapp-config
+             key: AppSetting2
+       
+       - name: AppSetting3
+         valueFrom:
+           configMapKeyRef:
+             name: sampleapp-config
+             key: AppSetting3
+
+       - name: customSettings1
+         valueFrom:
+           configMapKeyRef:
+             name: sampleapp-config
+             key: customSettings1
+
+       - name: secret1
+         valueFrom:
+           secretKeyRef:
+             name: sampleapp-secrets
+             key: secret1  
+
+       - name: secret2
+         valueFrom:
+           secretKeyRef:
+             name: sampleapp-secrets
+             key: secret2  
+       
+       - name: customSettings2
+         valueFrom:
+           secretKeyRef:
+             name: sampleapp-secrets
+             key: customSettings2 
+                              
+   nodeSelector:
+     kubernetes.io/os: windows
+   volumes:
+   - name: sampleapp-config
+     configMap:
+       name: sampleapp-config
+   - name: sampleapp-secrets
+     secret:
+       secretName: sampleapp-secrets

@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sampleapp-config
+data:
+  AppSetting1: "AppSetting1 set from ConfigMap Env variable"
+  AppSetting2: "AppSetting2 set from ConfigMap Env variable"
+  AppSetting3: "AppSetting3 set from ConfigMap Env variable"
+  customSettings1: "customSettings1 set ConfigMap Env variable"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sampleapp-secrets
+type: Opaque
+data:
+  secret1: c2VjcmV0MSBzZXQgZnJvbSBTZWNyZXQgRW52IHZhcmlhYmxl
+  secret2: c2VjcmV0MiBzZXQgZnJvbSBTZWNyZXQgRW52IHZhcmlhYmxl
+  customSettings2: Y3VzdG9tU2V0dGluZ3MxIHNldCBmcm9tIFNlY3JldCBFbnYgdmFyaWFibGU=
+  
